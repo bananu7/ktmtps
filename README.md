@@ -4,6 +4,18 @@ This a repository where I gathered and intend to update all the things related t
 
 ## Work log
 
+### 2021-03-22
+
+I finally soldered a header to programming pins and took a stab at programming the sensors. So far, they seem to perform the best when the sensor is directly facing the magnet (and not through the PCB), which means the default rotation (value 0 for the MSB direction bit) is wrong.
+
+The sensor can be programmed either permanently (via OTP) or just temporarily. The OTP programming starts with a regular "write" cycle, followed by high voltage pulses that permanently burn Zener diodes inside the chip to store the configuration. The serial interface for interacting with the unit is a bit different to the SSI used for digital readout (BTW, I've realized I skipped the digital data out (DO) on the PCB, which probably wasn't a great idea in retrospect). The SSI uses a very weird signal "delayed" by one clock pulse. The maximum frequency is specified as 1MHz. In contrary, programming allows up to 250kHz comparable to Mode 0 SPI, while the actual OTP burn requires very precisely timed pulses.
+
+My first attempts ended with the chip not responding to anything I was sending so far. All the timings for temporary programming only state maximum values, so I tried slowing down, but that didn't seem to help. I crafted completely bogus waveforms and observed them on the logic analyzer, but I only managed to get some reaction where I completely botched the programming (e.g. disconnected the clock cycle).
+
+Then I had a realization; the non-permanent programming showed `CSn` line going down at the end of it. However, in the OTP burn cycle, the CSn doesn't go down until it ends the enire procedure. Maybe I was supposed to keep it high? Tried that, but it didn't work. In frustration, I manually jerked the CSn line and plugged it into ground... _it worked_.
+
+I was really tired at that point after going at it for a few hours straight, so decided to only do one more test and call it a night; I added a long delay (2s) and a single up pulse on the CSn line (to mirror the jerky pulses caused by my manual operation which I managed to record on the analyzer), and that also seemed to work. So it's something around either waiting a while, or making one extra pulse on the CSn. I'll try figuring out what the next time (as well as looking at other programming bits), but nevertheless, progress!
+
 ### 2021-02-19
 
 The PCBs and magnets (6x2mm) arrived. I assembled them:
