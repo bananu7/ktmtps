@@ -4,6 +4,8 @@ This a repository where I gathered and intend to update all the things related t
 
 ## Work log
 
+### 2021-03-25
+
 This is actually a summary of a few days of progress. I started working on the permanent OTP programmer for the AS sensor. I've designed a schematic and built it up on a prototype board from DIP parts. My initial idea was to utilize an ATtiny MCU programmed with the specific bit vector, but for the testing I just plugged the Uno into the DIP 8 socket.
 
 ![programmer](images/programmer_1.jpg)
