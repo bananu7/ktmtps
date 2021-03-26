@@ -4,6 +4,18 @@ This a repository where I gathered and intend to update all the things related t
 
 ## Work log
 
+This is actually a summary of a few days of progress. I started working on the permanent OTP programmer for the AS sensor. I've designed a schematic and built it up on a prototype board from DIP parts. My initial idea was to utilize an ATtiny MCU programmed with the specific bit vector, but for the testing I just plugged the Uno into the DIP 8 socket.
+
+![programmer](reference/programmer_1.jpg)
+
+This is the early version of the programmer board when I still thought I could get away with just two transistors. Since then I've severly modified the schematic to utilize a proper NPN driver and added caps across transistor base resistors to improve the shut-off time.
+
+I also tried to generate pulses of exactly 2us; that turned out to be quite straighforward using the ATmega's Timer capabilities. The code showcasing that use is [here](programmer/code/atmega328p_2u_pulse).
+
+An important realization I had was that the PROG timings aren't actually that crucial; it's the CLK timings that matter. At first I thought that I'll need to drive the HV line with that accuracy, but I can split the problem up. The PROG line needs to be driven consistently and with too many transients (check) and the CLK line needs to generate exact 2us pulses (check). I think I have all parts of the puzzle now, what's left now is to integrate them together.
+
+I've also just realized that since I connected the transistors to both PWM pins of the tiny pinout, I have none left for driving the CLK clock precisely. Uh. I'll need to figure something out.
+
 ### 2021-03-22
 
 I finally soldered a header to programming pins and took a stab at programming the sensors. So far, they seem to perform the best when the sensor is directly facing the magnet (and not through the PCB), which means the default rotation (value 0 for the MSB direction bit) is wrong.
@@ -16,11 +28,13 @@ Then I had a realization; the non-permanent programming showed `CSn` line going 
 
 I was really tired at that point after going at it for a few hours straight, so decided to only do one more test and call it a night; I added a long delay (2s) and a single up pulse on the CSn line (to mirror the jerky pulses caused by my manual operation which I managed to record on the analyzer), and that also seemed to work. So it's something around either waiting a while, or making one extra pulse on the CSn. I'll try figuring out what the next time (as well as looking at other programming bits), but nevertheless, progress!
 
+P.S. The code for that version is [here](programmer/code/as5043_prog_soft).
+
 ### 2021-02-19
 
 The PCBs and magnets (6x2mm) arrived. I assembled them:
 
-![pcb](reference/PCB.jpg)
+![pcb](images/PCB.jpg)
 
 And mounted in the prototype casings, that I'll commit in a second to the v01 folder. Soldering the chips went quite easily, same with passive parts, even though they might not look as great. Because of limited availability of the passive parts, I decided to go with a voltage divider with 17k4 and 24k3 resistors, giving me slightly too low gain (2.4 vs 2.56 necessary for 90 degrees); that being said, the test was an astounding success, with everything clicking in place just fine, and the sensor immediately reporting stable, predictable readings.
 
