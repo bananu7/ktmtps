@@ -1,0 +1,12 @@
+Reference, Quantity, Value, Footprint, Datasheet
+C1 ,1,"100n","Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder","~"
+C2 ,1,"1...10uF","Capacitor_Tantalum_SMD:CP_EIA-2012-15_AVX-P_Pad1.30x1.05mm_HandSolder","~"
+D1 ,1,"LED","LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder","~"
+H1 H2 H3 H4 ,4,"MountingHole","MountingHole:MountingHole_3mm","~"
+J1 J2 ,2,"Conn_01x03_Male","Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical","~"
+R1 ,1,"0","Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder","~"
+R2 ,1,"1k","Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder","~"
+R3 ,1,"10k 1%","Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder","~"
+R4 ,1,"2.8k 1%","Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder","~"
+R5 ,1,"0-DNP","Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder","~"
+U1 ,1,"AS5043","Package_SO:SSOP-16_5.3x6.2mm_P0.65mm",""
