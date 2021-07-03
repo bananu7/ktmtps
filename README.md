@@ -10,6 +10,24 @@ After over two months of waiting, I got a refund for the parts I've ordered and 
 
 First off, in order to speed things up, I've ordered the sensors already soldered on a "development-kit" style of boards. They expose all the pins (7 on the board, because the chip has two Vcc pins, one for 3V3 and one for 5V) and come with convenient passive components. That "convenience" was actually quite problematic, because the way the chip is configured, it doesn't even produce an analog output at all! The R4 resistor puts it in a "programming" mode (the datasheet essentially allows it to be programmed by mechanical placement of the magnet and easy operations even without using I2C at all), so it had to be removed. Similarly, the R1 0Ohm resistor bridges the Vcc pins for 3V3 operation, and the chip works just fine at 5V after I got rid of it. I didn't have to reverse-engineer the board, so thanks to that one random Russian Aliexpress customer that put all of that information in his review.
 
+The board has convenient 4mm mounting holes which I initially assumed to be spaced by 15mm. I took my ready CAD file, got rid of the perimeter plastic around the board (the new one wouldn't fit, anyway) and moved the pins around. That has proven to be an utter failure. Removing the wall around the pins meant that they had much less time to cool on every layer, so they came out as poorly defined blobs that broke out even before I got the print off the bed. No worries, though, as the board didn't fit anyway, with the holes apparently being spaced 16mm in one direction and **15.5mm** in the other. Eek. I just used wood screws to hold the board in place, for now. In fact, those sensors are so good that even holding the magnet in your fingers above the surface produces reasonable results! Compared to my earlier attempts with linear hall sensors, this is a huge difference.
+
+As far as screws go, I was able to find a reasonable mounting screw for now, but I definitely need to redesign the PCB so that it's shorter on one end, because it does get annoying. Having more clearance near the screw would be really helpful.
+
+#### Wiring
+
+This is also a good point to mention the wiring, as I've been working on that as well. The sensor needs to connect to the bike at the end!
+
+For cables, I've ordered Polish-made TLWY brand ribbons, in 8x0.22mm^2, 8x0.35mm^2 and 8x0.5mm^2 (this corresponds to AWG 24, 22 and 20, respectively). They're of extremely high quality, meeting and exceeding automotive requirements. Even then, I am pretty sure that the original wiring uses AWG 18 cables, but for such a short connection I think I'm going to stick with 20.
+
+The wire thickness is also important for the plug itself. Thanks to some research I found out that the original plugs used by KTM were originally manufactured by Sumimoto (**MT090**, 3-pin). KTM sells them, but they're about half as expensive when bought as generic automotive parts. I was very happy with my cost savings until I've realized that AliExpress has them for 1/5th the price again. Oh well, at least I'll be able to compare them.
+
+To be quite honest, when they arrived, the only main difference seem to be the sealing rubbers. They're much firmer in the original ones, and a bit softer in the Chinese ones. I don't think this will have a huge effect. I mounted one plug so far using the TLWY wires with 1.7mm outer diameter and they seem to seal quite well. My crimping tool is technically only rated to AWG22, but it did just fine with those plugs. I'll wait until I have the casing for the dev-board prototype and will solder them on there.
+
+I also bought a couple of the counterparts to potentially make some test setups. I think that I'll also make a usual Y-splitter to mount on the bike (just like the ones routinely used for TPS setting, even though you'd technically only need to branch that one voltage out).
+
+---
+
 ### 2021-06-14
 
 I've ordered the new sensor from Aliexpress, but the package hasn't arrived yet. In the meantime, I've built an enclosure for my 3D printer and successfully printed some ASA parts. Unfortunately, despite having excellent temperature and UV (we'll see about fuel vapors) resistance, they're much weaker mechanically, which was a disappointment.
