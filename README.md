@@ -6,7 +6,11 @@ This a repository where I gathered and intend to update all the things related t
 
 ### 2021-07-03
 
-Again, this should have been broken 
+After over two months of waiting, I got a refund for the parts I've ordered and subsequently reordered them. They arrived a few days ago, and I was able to get back on track pretty quickly. This still required some nontrivial operations, though.
+
+### 2021-06-14
+
+I've ordered the new sensor from Aliexpress, but the package hasn't arrived yet. In the meantime, I've built an enclosure for my 3D printer and successfully printed some ASA parts. Unfortunately, despite having excellent temperature and UV (we'll see about fuel vapors) resistance, they're much weaker mechanically, which was a disappointment.
 
 ### 2021-03-28
 
@@ -15,6 +19,8 @@ _This update is copied from advrider forums._
 I have some news - some bad, some good, but worth an update nonetheless.
 
 The video from 2021-03-22 was showing the sensor programmed non-permanently. It had the configuration I needed, but once I resetted it (or cut power) it would go back to stock settings. The special programmer I tried to build was supposed to solve that and allow me to make the settings permanent.
+
+![programmer](images/programmer_2.jpg)
 
 I spent a week on it and got it to the point where I was pretty sure it was going to work, confirming the "correct" operation down to microseconds. Then I plugged the sensor in and... well, bricked it. It received some configuration, but decidedly not what I needed.
 
