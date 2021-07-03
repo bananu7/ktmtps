@@ -8,6 +8,8 @@ This a repository where I gathered and intend to update all the things related t
 
 After over two months of waiting, I got a refund for the parts I've ordered and subsequently reordered them. They arrived a few days ago, and I was able to get back on track pretty quickly. This still required some nontrivial operations, though.
 
+First off, in order to speed things up, I've ordered the sensors already soldered on a "development-kit" style of boards. They expose all the pins (7 on the board, because the chip has two Vcc pins, one for 3V3 and one for 5V) and come with convenient passive components. That "convenience" was actually quite problematic, because the way the chip is configured, it doesn't even produce an analog output at all! The R4 resistor puts it in a "programming" mode (the datasheet essentially allows it to be programmed by mechanical placement of the magnet and easy operations even without using I2C at all), so it had to be removed. Similarly, the R1 0Ohm resistor bridges the Vcc pins for 3V3 operation, and the chip works just fine at 5V after I got rid of it. I didn't have to reverse-engineer the board, so thanks to that one random Russian Aliexpress customer that put all of that information in his review.
+
 ### 2021-06-14
 
 I've ordered the new sensor from Aliexpress, but the package hasn't arrived yet. In the meantime, I've built an enclosure for my 3D printer and successfully printed some ASA parts. Unfortunately, despite having excellent temperature and UV (we'll see about fuel vapors) resistance, they're much weaker mechanically, which was a disappointment.
