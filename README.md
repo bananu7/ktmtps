@@ -20,7 +20,7 @@ I have some news - some bad, some good, but worth an update nonetheless.
 
 The video from 2021-03-22 was showing the sensor programmed non-permanently. It had the configuration I needed, but once I resetted it (or cut power) it would go back to stock settings. The special programmer I tried to build was supposed to solve that and allow me to make the settings permanent.
 
-![programmer](images/programmer_2.jpg)
+![programmer_2_ready](images/programmer_2.jpg)
 
 I spent a week on it and got it to the point where I was pretty sure it was going to work, confirming the "correct" operation down to microseconds. Then I plugged the sensor in and... well, bricked it. It received some configuration, but decidedly not what I needed.
 
@@ -47,7 +47,9 @@ This is actually a summary of a few days of progress. I started working on the p
 
 ![programmer](images/programmer_1.jpg)
 
-This is the early version of the programmer board when I still thought I could get away with just two transistors. Since then I've severly modified the schematic to utilize a proper NPN driver and added caps across transistor base resistors to improve the shut-off time.
+This is the early version of the programmer board when I still thought I could get away with just two transistors. Since then I've severly modified the schematic to utilize a proper NPN driver and added caps across transistor base resistors to improve the shut-off time. The image below shows the delay that was caused by what's apparently called "Miller capacitance" or "charge storage", which I learned on [Electronics.se][10].
+
+![transistor_delay](images/programmer_transistor_off_delay.jpg)
 
 I also tried to generate pulses of exactly 2us; that turned out to be quite straighforward using the ATmega's Timer capabilities. The code showcasing that use is in `programmer/code/atmega328p_2u_pulse`.
 
@@ -140,3 +142,4 @@ One of the biggest inspirations for me was [this post][2] on SimHQ forum, descri
  [7]: https://ams.com/documents/20143/36005/AS5043_UG000105_1-00.pdf/bf8c0c98-c7ba-e6d1-0d0d-d9de9658eb91
  [8]: https://ams.com/rmh05-dk-xx
  [9]: https://ams.com/documents/20143/36005/AnglePositionOnAxis_AN000271_2-00.pdf/d3bc1235-a3da-7e15-15bf-624e9ff0c389
+ [10]: https://electronics.stackexchange.com/questions/555440/transistor-turns-off-only-after-a-delay
