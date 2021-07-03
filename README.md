@@ -4,6 +4,37 @@ This a repository where I gathered and intend to update all the things related t
 
 ## Work log
 
+### 2021-07-03
+
+Again, this should have been broken 
+
+### 2021-03-28
+
+_This update is copied from advrider forums._
+
+I have some news - some bad, some good, but worth an update nonetheless.
+
+The video from 2021-03-22 was showing the sensor programmed non-permanently. It had the configuration I needed, but once I resetted it (or cut power) it would go back to stock settings. The special programmer I tried to build was supposed to solve that and allow me to make the settings permanent.
+
+I spent a week on it and got it to the point where I was pretty sure it was going to work, confirming the "correct" operation down to microseconds. Then I plugged the sensor in and... well, bricked it. It received some configuration, but decidedly not what I needed.
+
+I still have a few units left, so I might try to fix the issues with this board, but meanwhile I've found yet another sensor (AS5600) that's:
+
+- a newer design
+- more accurate (12 vs 10 bits)
+- much easier to program (no special programmer at all) - in fact, the rotation direction has a dedicated pin...
+- much easier to solder (SOIC-8 vs SSOP-16)
+- 6 times cheaper and easier to obtain
+- also automotive-use qualified
+
+I can only kick myself for not noticing it earlier. I think it should be a perfect replacement; I'm going to order some and try to work on the new plans. I wanted to make a V2 PCB anyway, to change the shape and make it easier to fit the mounting screw in the casing. The only downside is waiting for the PCBs to be made again, but after the first run I got more confident in being able to get them to work. I'll try ordering some pre-mounted boards with the new sensor as well to see if I can test it in practice even before my own PCBs are ready. Of course this means I'll need to alter the CAD designs too.
+
+I could probably attack the programmer again and try to get it to work, but I think that at this point the time is better spent into preparing the new sensor; if only for the lower cost and much wider availability!
+
+So while this is a bit of a hiccup, and my next iteration will take about a month to a month and a half to get all parts here, I think I've amassed enough experience to make it much closer to the final product.
+
+In the meantime I might finally take a stab at setting up my 3D-printer for high-temperature materials to see if I'll be able to get a casing what would be usable in a real-world scenario.
+
 ### 2021-03-25
 
 This is actually a summary of a few days of progress. I started working on the permanent OTP programmer for the AS sensor. I've designed a schematic and built it up on a prototype board from DIP parts. My initial idea was to utilize an ATtiny MCU programmed with the specific bit vector, but for the testing I just plugged the Uno into the DIP 8 socket.
@@ -27,6 +58,8 @@ The sensor can be programmed either permanently (via OTP) or just temporarily. T
 My first attempts ended with the chip not responding to anything I was sending so far. All the timings for temporary programming only state maximum values, so I tried slowing down, but that didn't seem to help. I crafted completely bogus waveforms and observed them on the logic analyzer, but I only managed to get some reaction where I completely botched the programming (e.g. disconnected the clock cycle).
 
 Then I had a realization; the non-permanent programming showed `CSn` line going down at the end of it. However, in the OTP burn cycle, the CSn doesn't go down until it ends the enire procedure. Maybe I was supposed to keep it high? Tried that, but it didn't work. In frustration, I manually jerked the CSn line and plugged it into ground... _it worked_.
+
+https://www.youtube.com/watch?v=5MJOhFoH9Xk
 
 I was really tired at that point after going at it for a few hours straight, so decided to only do one more test and call it a night; I added a long delay (2s) and a single up pulse on the CSn line (to mirror the jerky pulses caused by my manual operation which I managed to record on the analyzer), and that also seemed to work. So it's something around either waiting a while, or making one extra pulse on the CSn. I'll try figuring out what the next time (as well as looking at other programming bits), but nevertheless, progress!
 
