@@ -4,6 +4,8 @@ This a repository where I gathered and intend to update all the things related t
 
 ## Work log
 
+---
+
 ### 2021-07-03
 
 After over two months of waiting, I got a refund for the parts I've ordered and subsequently reordered them. They arrived a few days ago, and I was able to get back on track pretty quickly. This still required some nontrivial operations, though.
@@ -13,6 +15,14 @@ First off, in order to speed things up, I've ordered the sensors already soldere
 The board has convenient 4mm mounting holes which I initially assumed to be spaced by 15mm. I took my ready CAD file, got rid of the perimeter plastic around the board (the new one wouldn't fit, anyway) and moved the pins around. That has proven to be an utter failure. Removing the wall around the pins meant that they had much less time to cool on every layer, so they came out as poorly defined blobs that broke out even before I got the print off the bed. No worries, though, as the board didn't fit anyway, with the holes apparently being spaced 16mm in one direction and **15.5mm** in the other. Eek. I just used wood screws to hold the board in place, for now. In fact, those sensors are so good that even holding the magnet in your fingers above the surface produces reasonable results! Compared to my earlier attempts with linear hall sensors, this is a huge difference.
 
 As far as screws go, I was able to find a reasonable mounting screw for now, but I definitely need to redesign the PCB so that it's shorter on one end, because it does get annoying. Having more clearance near the screw would be really helpful.
+
+That being said, after hooking up the direction pin to Vcc (this is a huge benefit of using the 5600 over the 5043!) for counter-clockwise-positive operation and putting it on the TB set, it worked just fine - albeit ratiometrically over 360 degrees. That was already great, though, as the chip can be straightforwardly programmed over just I2C with no HV required. In fact, instead of writing my own library, I used this [excellent example] with a human-friendly interface. Unfortunately during testing, even though I only wanted to play with runtime setting, I must've fat-fingered something and burned the angle settings in. Thankfully, the chip can accept that 3 times, so it wasn't bricked just yet.
+
+> Note: The sensor has two possibilities of range settings that were (and still are) a bit confusing to me. Either you write into the MANG (angle) register to set the range of operation, or you write to ZPOS/MPOS to set the start and stop angles (corresponding to 0V and Vcc). Once the ZPOS/MPOS pair has been burned in, the MANG can't even be set dynamically. MANG can be burned in just once. ZPOS/MPOS can be burned in 3 times.
+
+The software in the example works by allowing you to set the start and end values simply by rotating the magnet to appropriate position. Of course this is rather imprecise, but was enough for my testing. One more feature that it has is the raw angle display, which allowed me to more precisely measure the actual operating range of the sensor. To my surprise, it came out to only be **78 degrees**. I am not sure if the TBs have been zeroed-out prior to that, though, and will have to confirm with the original TPS. Either way, that meant that for testing I needed about 140 degrees of 0-5V sweep to get the desired mV/deg to obtain 0.6-3.8V.
+
+This has worked beautifully. I rotated the sensor to indicate almost 0, programmed start position, turned it 140 degrees, programmed end position, and then burned the angle settings and unplugged the I2C connection. This is the first case of a successfully permanently programmed sensor that technically could go into the bike!
 
 #### Wiring
 
@@ -26,15 +36,27 @@ To be quite honest, when they arrived, the only main difference seem to be the s
 
 I also bought a couple of the counterparts to potentially make some test setups. I think that I'll also make a usual Y-splitter to mount on the bike (just like the ones routinely used for TPS setting, even though you'd technically only need to branch that one voltage out).
 
+#### Next steps
+
+This was a long update written over a couple commits, but it represents a significant milestone for me. I've reached the point where I could conceivably take my sensor and plug it into a live bike, and thus its ECU, and see whether it likes the signal or not! I've realized that I don't even have to turn the engine on for that test, I can just ask TuneECU to tell me whether the computer sees the right input.
+
+Before that happens, though, I need to create a proper casing just for the dev-board now and see how my plastic reacts to fuel vapors. I've been also thinking about putting some insulation sheet between the hole where the bearings sit and the electronics, as there need not be a direct contact there. The manual talks about an "airgap", but a thin mylar, kapton or similar sheet should work just fine.
+
+After the unit is enclosed, has a proper screw and the plug connected, I'll consider it the first prototype ready for functional testing. There's a chance I might conduct just the electrical test first, but I see no reason why it shouldn't work with the ECU (since it presents an analog voltage just like a potentiometer would).
+
+Of course even if the prototype works, there's still a question of a new PCB for the AS5600 (with more clearance), the spring loading (I've actually had a simpler idea that would clamp the shaft on the TB arm instead) et cetera, but there might be some things that only the functional testing of the prototype will reveal. I'd put it in my personal motorcycle if not for the fact that it needs to be ready for a long trip soon, so that'll have to wait until then.
+
 ---
 
 ### 2021-06-14
 
 I've ordered the new sensor from Aliexpress, but the package hasn't arrived yet. In the meantime, I've built an enclosure for my 3D printer and successfully printed some ASA parts. Unfortunately, despite having excellent temperature and UV (we'll see about fuel vapors) resistance, they're much weaker mechanically, which was a disappointment.
 
+---
+
 ### 2021-03-28
 
-_This update is copied from advrider forums._
+_This update has been copied from advrider forums._
 
 I have some news - some bad, some good, but worth an update nonetheless.
 
@@ -61,6 +83,8 @@ So while this is a bit of a hiccup, and my next iteration will take about a mont
 
 In the meantime I might finally take a stab at setting up my 3D-printer for high-temperature materials to see if I'll be able to get a casing what would be usable in a real-world scenario.
 
+---
+
 ### 2021-03-25
 
 This is actually a summary of a few days of progress. I started working on the permanent OTP programmer for the AS sensor. I've designed a schematic and built it up on a prototype board from DIP parts. My initial idea was to utilize an ATtiny MCU programmed with the specific bit vector, but for the testing I just plugged the Uno into the DIP 8 socket.
@@ -77,7 +101,9 @@ An important realization I had was that the PROG timings aren't actually that cr
 
 I've also just realized that since I connected the transistors to both PWM pins of the tiny pinout, I have none left for driving the CLK clock precisely. Uh. I'll need to figure something out.
 
-### 2021-03-22
+---
+
+### 2021-03-22 
 
 I finally soldered a header to programming pins and took a stab at programming the sensors. So far, they seem to perform the best when the sensor is directly facing the magnet (and not through the PCB), which means the default rotation (value 0 for the MSB direction bit) is wrong.
 
@@ -92,6 +118,8 @@ https://www.youtube.com/watch?v=5MJOhFoH9Xk
 I was really tired at that point after going at it for a few hours straight, so decided to only do one more test and call it a night; I added a long delay (2s) and a single up pulse on the CSn line (to mirror the jerky pulses caused by my manual operation which I managed to record on the analyzer), and that also seemed to work. So it's something around either waiting a while, or making one extra pulse on the CSn. I'll try figuring out what the next time (as well as looking at other programming bits), but nevertheless, progress!
 
 P.S. The code for that version is in `programmer/code/as5043_prog_soft`.
+
+---
 
 ### 2021-02-19
 
@@ -109,13 +137,19 @@ Another issue I've encountered was that my prototype casing was hard to desing w
 
 I also decided that it's the right time to tackle the issue of the spring. My research shows that I'll need around 80Nmm of peak torque at 90 degrees of rotation (actually a bit more than that, because the original sensor has some space around for calibration). This translates to e.g. 1mm thick stainless steel wire with 5 wraps and an outer diameter of 12mm (inner 10mm). Other configurations are possible, and I'll try to order some wire and do some practical experiments. I think making the holes holding the spring itself shouldn't be _that_ hard, but I also need to consider the assembly process. 
 
+---
+
 ### 2021-01-14
 
 I created this repo and gathered all the files. I also filled out all the entries below retroactively, to keep the development history intact. The project moves on, and I'm currently ordering the SMD parts, waiting for the PCBs to be fabricated and starting the CAD work for the v01 3D-printed case that will hold the new round magnet and the new PCB.
 
+---
+
 ### 2021-01-10
 
 Since the AS5043 is only available in a SSOP-16 SMD package, I wouldn't be able to use it without some breakout board. I decided to create and order a custom PCB for it, that included resistors necessary for an appropriate voltage mapping, and a breakout for programming the unit. The PCB is in the `PCB` folder.
+
+---
 
 ### 2021-01-08
 
@@ -124,17 +158,23 @@ During the research about the AS5043 I found [this experiment][6] led by two guy
 Some additional materials include:
  * [the user manual][7]
 
+---
+
 ### 2021-01-04
 
 I learned about the existence of [AS5043][5] and the line of those sensors. I still felt there's a lot to be learned from the linear sensor-based approach, but since I could order a few samples, I've decided to give those a shot. They seemed much more straightforward to set up and were specifically designed for potentiometer replacement / TPS use. The samples arrived very quickly, which prompted me to go with that option for now.
 
 I have ordered special radially-polarized magnets for them, too. There's a [special magnet guide][9], but the ones I got were 6mm ones specially labeled for rotation sensors.
 
+---
+
 ### 2021-01-02
 
 I got myself a 3D printer and fabricated some of my CAD drafts. They came out well, and allowed for much better tolerances, which in turn meant much better sensor readings. It was still oversaturated, and required being pulled out of the center of the magnets, which probably didn't help the linearity. Around that time I found the [Infineon TPS Application note][4] as well as [the datasheet for their programmable sensor][3]. I wasn't yet very concerned with the electric signals, as I was quite sure I can get the voltage to my desired range using a couple op-amps.
 
 In fact, I did some early tests with an LM258P that seemed to give good results. The maximum voltage achievable with 5V supply is about 3.8V, so about right what the sensor needs to produce.
+
+---
 
 ### 2020-11-16
 
@@ -143,6 +183,8 @@ I switched to a free version of Siemens Solid Edge, which helped in the modellin
 At first, I tried to put one magnet in the middle of the shaft, and put the sensor to the side, to simplify the construction. This was a complete failure, with wildly varying readings. 
 
 The next tryout utilized a shaft (I used 8mm woodworking pins) drilled longitudinally, with two magnets glued on the sides like in the reference design. This creates a much more linear magnetic field near the sensor. I would later learn that even stronger alignment of the field might be necessary, described in [this application note][4]. I have also learned that the two magnets I used were much too strong and were oversaturating the sensor.
+
+---
 
 ### 2020-09-09 - "official start of the project"
 
@@ -163,3 +205,4 @@ One of the biggest inspirations for me was [this post][2] on SimHQ forum, descri
  [8]: https://ams.com/rmh05-dk-xx
  [9]: https://ams.com/documents/20143/36005/AnglePositionOnAxis_AN000271_2-00.pdf/d3bc1235-a3da-7e15-15bf-624e9ff0c389
  [10]: https://electronics.stackexchange.com/questions/555440/transistor-turns-off-only-after-a-delay
+ [11]: https://github.com/Seeed-Studio/Seeed_Arduino_AS5600
