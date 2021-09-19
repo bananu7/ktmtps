@@ -9,6 +9,18 @@ This a repository where I gathered and intend to update all the things related t
 
 ---
 
+### 2021-09-19
+
+Unfortunately, I got a bit stuck, and with the weather being nice, i just didn't make too much progress. I hope the coming winter months will give me a better time.
+
+The biggest hurdle right now is fixing the dev board in. So far, while I was finally able to print the properly dimensioned pins (using the Cura's "modify mesh settings" to selectively slow down and increase infill for them), the dev board was just made so imprecisely that I couldn't get it to fit nicely. I just need to design my own board and order from JLC again, as that's proven to work way better. I can also include enough space for the mounting screw then.
+
+As far as 3D printing goes, I did some research, and while Nylon (PA12) would be ideal for this application, basing on some tests I found online PLA is actually quite resistant to gasoline! I've mentioned that the ASA parts were disappointing, but I think I'm just going to go with PLA for the first truly functional prototype.
+
+There is an additional thing worth mentioning. While searching the internet, I found a very similarly looking TPS unit, going around for around $20 - supposedly for Polaris vehicles. The physical dimensions look exactly the same, and some tests made on the forum seem to suggest that it might actually be electrically compatible. It has the wrong plug (the opposite sumimoto connector), but that's an easy fix. I've actually ordered one months ago, but Amazon has dropped the ball, so I'm waiting for a package from Aliexpress right now to do my own testing. I am not planning to abandon my project if it turns out to be a drop-in replacement, but it might be a good option for a lot of people.
+
+---
+
 ### 2021-07-03
 
 After over two months of waiting, I got a refund for the parts I've ordered and subsequently reordered them. They arrived a few days ago, and I was able to get back on track pretty quickly. This still required some nontrivial operations, though.
