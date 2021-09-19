@@ -1,5 +1,8 @@
 # Re-engineering a KTM Throttle Position Sensor
 
+<img src="https://www.oshwa.org/wp-content/uploads/2014/03/oshw-logo.svg" width="150" height="150">
+
+
 This a repository where I gathered and intend to update all the things related to the KTM 990 TPS. The sensor in those motorcycles is based on a potentiometer, and wears out quickly (head to [Original TPS](/reference/Original.md) for details). As such, I decided to try and create a hall-effect based replacement, as has become the industry standard.
 
 ## Work log
@@ -16,7 +19,7 @@ The board has convenient 4mm mounting holes which I initially assumed to be spac
 
 As far as screws go, I was able to find a reasonable mounting screw for now, but I definitely need to redesign the PCB so that it's shorter on one end, because it does get annoying. Having more clearance near the screw would be really helpful.
 
-That being said, after hooking up the direction pin to Vcc (this is a huge benefit of using the 5600 over the 5043!) for counter-clockwise-positive operation and putting it on the TB set, it worked just fine - albeit ratiometrically over 360 degrees. That was already great, though, as the chip can be straightforwardly programmed over just I2C with no HV required. In fact, instead of writing my own library, I used this [excellent example] with a human-friendly interface. Unfortunately during testing, even though I only wanted to play with runtime setting, I must've fat-fingered something and burned the angle settings in. Thankfully, the chip can accept that 3 times, so it wasn't bricked just yet.
+That being said, after hooking up the direction pin to Vcc (this is a huge benefit of using the 5600 over the 5043!) for counter-clockwise-positive operation and putting it on the TB set, it worked just fine - albeit ratiometrically over 360 degrees. That was already great, though, as the chip can be straightforwardly programmed over just I2C with no HV required. In fact, instead of writing my own library, I used this [excellent example][11] with a human-friendly interface. Unfortunately during testing, even though I only wanted to play with runtime setting, I must've fat-fingered something and burned the angle settings in. Thankfully, the chip can accept that 3 times, so it wasn't bricked just yet.
 
 > Note: The sensor has two possibilities of range settings that were (and still are) a bit confusing to me. Either you write into the MANG (angle) register to set the range of operation, or you write to ZPOS/MPOS to set the start and stop angles (corresponding to 0V and Vcc). Once the ZPOS/MPOS pair has been burned in, the MANG can't even be set dynamically. MANG can be burned in just once. ZPOS/MPOS can be burned in 3 times.
 
@@ -97,7 +100,7 @@ This is the early version of the programmer board when I still thought I could g
 
 I also tried to generate pulses of exactly 2us; that turned out to be quite straighforward using the ATmega's Timer capabilities. The code showcasing that use is in `programmer/code/atmega328p_2u_pulse`.
 
-An important realization I had was that the PROG timings aren't actually that crucial; it's the CLK timings that matter. At first I thought that I'll need to drive the HV line with that accuracy, but I can split the problem up. The PROG line needs to be driven consistently and with too many transients (check) and the CLK line needs to generate exact 2us pulses (check). I think I have all parts of the puzzle now, what's left now is to integrate them together.
+An important realization I had was that the PROG timings aren't actually that crucial; it's the CLK timings that matter. At first I thought that I'll need to drive the HV line with that accuracy, but I can split the problem up. The PROG line needs to be driven consistently and with not too many transients (check) and the CLK line needs to generate exact 2us pulses (check). I think I have all parts of the puzzle now, what's left now is to integrate them together.
 
 I've also just realized that since I connected the transistors to both PWM pins of the tiny pinout, I have none left for driving the CLK clock precisely. Uh. I'll need to figure something out.
 
