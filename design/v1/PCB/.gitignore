@@ -18,3 +18,5 @@ fp-info-cache
 
 # Netlist files (exported from Eeschema)
 *.net
+
+gerber/
