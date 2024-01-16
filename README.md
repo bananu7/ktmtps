@@ -7,6 +7,12 @@ This a repository where I gathered and intend to update all the things related t
 
 ## Work log
 
+### 2024-01-16
+
+As almost three years pass from the last update, I decided to go back to the project. The prices of the OEM TPS keep rising, sitting at 160 eur currently. In addition, thanks to @gefr at advrider, we got a confirmation that the 990s ECU will happily work with the AS5600 unit. It's a newer, nicer rotation sensor based on the same principle. It can be trivially programmed via regular SPI without a need for a special programmer, and outputs the desired voltage range as analog PWM directly. So, what seems to remain is making a production-ready prototype.
+
+There are two main challenges that need to be tackled - the PCB and the enclosure; with the latter mostly being dependent on the former. I've ordered a couple of smaller-size development boards from Aliexpress, but I think that eventually I'll need to make a new board. thankfully, the sensor requires absolutely minimum of external components, so the board can be made quite small. I am thinking about making it circular, with a notch for alignment, then covering it with an oring and screwing the cover over.
+
 ---
 
 ### 2021-09-19
