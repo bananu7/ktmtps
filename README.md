@@ -7,6 +7,24 @@ This a repository where I gathered and intend to update all the things related t
 
 ## Work log
 
+### 2024-01-25
+
+The V2 devkits have arrived. Stock photo as they're everywhere:
+
+![as5600 dev kit v2](images/as5600-devkit-v2-pic.png)
+
+I'm pleasantly surprised that i got the dimensions almost correctly from the photo. Here's how big the board is:
+
+![as5600 dev kit v2 dimensions](images/as5600-devkit-v2-dimensions.png)
+
+Since it's a circular shape, it's actually quite easy to design around it. I might just a centering lip to make sure the PCB doesn't rotate, otherwise it'll be held in place by an oring and and a cover.
+
+![TPS v2 section view](images/tps-v2-section.png)
+
+I have to move the CAD files around, as i started to initially design for my own larger PCB, but the devkit v2 seems to actually be quite good and would save me a lot of time working, ordering and assembling them.
+
+I'm still pondering on whether 2 bearings are even necessary. I might do one of the prototypes with just one bearing and see how it holds up.
+
 ### 2024-01-18
 
 I've added early prototype files for CAD and PCB for v2. I think I found a decent way to mount the PCB, utilizing just the outline of the board
