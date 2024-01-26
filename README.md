@@ -7,6 +7,19 @@ This a repository where I gathered and intend to update all the things related t
 
 ## Work log
 
+### 2024-01-26
+
+It's right past midnight, so it should really be the note for Friday. I got the devkit-v2 casing printed. Quick notes
+
+* needs a chamfer on the bottom where it enters the TBs
+* needs more clearance around the pcb perimeter (not much though, likely just pcb has some unevenness)
+* needs a bit less clearance for pcb centering tab (the bearing must fit there)
+* the shaft needs more clearance inside the bearing (reduce shaft OD)
+* bearing into casing clearance is OK
+* the cablehole should be oval/wider and can be slightly lower
+
+I'll try to tackle those tomorrow.
+
 ### 2024-01-25
 
 The V2 devkits have arrived. Stock photo as they're everywhere:
